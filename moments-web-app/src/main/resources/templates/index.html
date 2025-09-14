@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Include meta tags -->
+  <th:block th:replace="~{fragments/head :: meta}"></th:block>
+
+  <!-- Page title -->
+  <title>Moments Event Platform</title>
+
+  <!-- Include common CSS -->
+  <th:block th:replace="~{fragments/head :: common-css}"></th:block>
+</head>
+
+<body id="category">
+<!-- Include header with NAVBAR -->
+<header th:replace="~{fragments/header :: header}"></header>
+
+<!-- Banner -->
+<div th:replace="~{fragments/banner :: banner('Moments Event Platform', 'Feel The Moment')}"></div>
+
+<!-- CATEGORIES AND FILTERS, left side of page-->
+<div class="container">
+  <div class="row">
+    <div class="col-xl-3 col-lg-4 col-md-5">
+
+
+      <div class="sidebar-categories">
+        <div class="head">
+          <div class="d-flex justify-content-between align-items-center">
+            <span>Categories</span>
+            <a class="btn bg-light text-secondary small px-3 py-0"
+               th:href="${currentUrlWithoutCategory}">
+              Clear
+            </a>
+          </div>
+        </div>
+        <ul class="main-categories">
+
+          <div th:each="category : ${categories}">
+            <!-- SINGLE CATEGORY ITEM-->
+            <div th:replace="~{fragments/index/category-item :: categoryItem(
+              href=${currentUrlWithoutCategory + '&category=' + category.categoryName()},
+              title=${category.categoryName()},
+              count=${category.momentCount()},
+              selected=${category.categoryName() == categorySelected}
+              )}">
+            </div>
+          </div>
+
+        </ul>
+      </div>
+
+      <div class="sidebar-categories">
+          <div class="head">
+            <div class="d-flex justify-content-between align-items-center">
+              <span>Cities</span>
+              <a class="btn bg-light text-secondary small px-3 py-0"
+                 th:href="${currentUrlWithoutLocation}">
+                Clear
+              </a>
+            </div>
+          </div>
+        <ul class="main-categories">
+
+          <div th:each="city : ${cities}">
+            <div th:replace="~{fragments/index/category-item :: categoryItem(
+              href=${currentUrlWithoutLocation + '&location=' + city.cityName()},
+              title=${city.cityName()},
+              count=${city.momentCount()},
+              selected=${city.cityName() == locationSelected}
+              )}">
+            </div>
+          </div>
+
+        </ul>
+      </div>
+
+<!--      &lt;!&ndash;   PRODUCT FILTER SECTION    &ndash;&gt;-->
+<!--      <div class="sidebar-filter">-->
+
+<!--        <div class="top-filter-head">-->
+<!--          <div class="d-flex justify-content-between align-items-center">-->
+<!--            <span>Filters</span>-->
+<!--            <a class="btn bg-light text-secondary small px-3 py-0" th:href="@{/}">-->
+<!--              Clear-->
+<!--            </a>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash;   PRICE FILTER    &ndash;&gt;-->
+<!--        <div class="common-filter">-->
+<!--          <div class="head">Price</div>-->
+<!--          <div class="price-range-area">-->
+<!--            <div id="price-range"></div>-->
+<!--            <div class="value-wrapper d-flex">-->
+<!--              <div class="price">Price:</div>-->
+<!--              <span>$</span>-->
+<!--              <div id="lower-value"></div>-->
+<!--              <div class="to">to</div>-->
+<!--              <span>$</span>-->
+<!--              <div id="upper-value"></div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+    </div>
+
+    <div class="col-xl-9 col-lg-8 col-md-7">
+      <!-- PAGINATION AND SORTING -->
+      <div th:replace="~{fragments/paginationAndSorting :: paginationAndSorting(
+        sortType=${sortType},
+        sortDirection=${sortDirection},
+        currentUrlWithoutSort=${currentUrlWithoutSort},
+        pageSize=${pageSize},
+        currentUrlWithoutSize=${currentUrlWithoutSize},
+        currentPage=${currentPage},
+        totalPages=${totalPages},
+        currentUrlWithoutPage=${currentUrlWithoutPage}
+      )}"></div>
+
+      <!-- Start Best Seller -->
+      <section class="lattest-product-area pb-40 category-list">
+        <div class="row">
+
+          <!-- single product -->
+          <div th:each="moment : ${moments}" class="col-lg-4 col-md-6">
+
+            <div th:insert="~{fragments/product :: product(
+              ${moment.id},
+              ${moment.thumbnail},
+              ${moment.title},
+              ${#temporals.format(moment.startDate, 'dd.MM.yyyy HH:mm')},
+              ${moment.category},
+              ${moment.location},
+              ${'€' + moment.price},
+              ${null},
+              ${'/moment/' + moment.id})}">
+            </div>
+          </div>
+
+        </div>
+      </section>
+      <!-- End Best Seller -->
+
+      <!-- PAGINATION AND SORTING -->
+      <div th:replace="~{fragments/paginationAndSorting :: paginationAndSorting(
+        sortType=${sortType},
+        sortDirection=${sortDirection},
+        currentUrlWithoutSort=${currentUrlWithoutSort},
+        pageSize=${pageSize},
+        currentUrlWithoutSize=${currentUrlWithoutSize},
+        currentPage=${currentPage},
+        totalPages=${totalPages},
+        currentUrlWithoutPage=${currentUrlWithoutPage}
+      )}"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Include footer fragment -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- JS Scripts -->
+<div th:replace="~{fragments/common-scripts}"></div>
+
+</body>
+
+</html>
