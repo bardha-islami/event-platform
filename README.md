@@ -254,7 +254,7 @@ This guide will walk you through setting up the Moments Event Platform on your l
 ## Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/Team-OMO-Org/Moments-Event-Platform.git
+git clone https://github.com/bardha-islami/event-platform.git
 cd Moments-Event-Platform
 ```
 
