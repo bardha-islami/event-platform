@@ -255,7 +255,7 @@ This guide will walk you through setting up the Moments Event Platform on your l
 
 ```bash
 git clone https://github.com/bardha-islami/event-platform.git
-cd Moments-Event-Platform
+cd Event-Platform
 ```
 
 ## Step 2: Review Service Ports
